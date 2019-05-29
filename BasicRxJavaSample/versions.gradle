@@ -133,8 +133,11 @@ kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
 kotlin.test = "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin"
 kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
 kotlin.allopen = "org.jetbrains.kotlin:kotlin-allopen:$versions.kotlin"
-
 deps.kotlin = kotlin
+
+def kotlinx = [:]
+kotlinx.coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1"
+deps.kotlinx = kotlinx
 
 deps.paging_ktx = "androidx.paging:paging-runtime-ktx:$versions.paging"
 

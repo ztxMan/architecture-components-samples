@@ -17,10 +17,15 @@
 package com.android.example.paging.pagingwithnetwork
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.android.example.paging.pagingwithnetwork.reddit.repository.RedditPostRepository
 import com.android.example.paging.pagingwithnetwork.reddit.ui.RedditActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * chooser activity for the demo.
@@ -39,10 +44,27 @@ class MainActivity : AppCompatActivity() {
         networkOnlyWithPageKeys.setOnClickListener {
             show(RedditPostRepository.Type.IN_MEMORY_BY_PAGE)
         }
+
+        runBlocking(Dispatchers.IO) {
+            Log.d("AAAA", "${trivialFun2()} + ${trivialFun()}")
+        }
+
+        runBlocking(Dispatchers.Main) {
+            Log.d("AAAA", "${trivialFun2()} + ${trivialFun()}")
+        }
     }
 
     private fun show(type: RedditPostRepository.Type) {
         val intent = RedditActivity.intentFor(this, type)
         startActivity(intent)
+    }
+
+    suspend fun trivialFun(): Int {
+        return suspendCoroutine { it.resume(3) }
+    }
+
+    suspend fun trivialFun2(): Int {
+        val a = suspendCoroutine<Int> { it.resume(2) }
+        return trivialFun() + a
     }
 }
