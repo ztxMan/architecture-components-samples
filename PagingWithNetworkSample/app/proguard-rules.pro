@@ -21,7 +21,8 @@
 #-renamesourcefileattribute SourceFile
 
 -dontpreverify
--dontobfuscate
+# Uncomment this line if you need to debug
+#-dontobfuscate
 -dontskipnonpubliclibraryclasses
 -verbose
 
