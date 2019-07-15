@@ -20,7 +20,8 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--dontobfuscate
+# Uncomment this line if you need to debug.
+#-dontobfuscate
 
 -ignorewarnings
 
