@@ -22,8 +22,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.example.paging.pagingwithnetwork.reddit.repository.RedditPostRepository
 import com.android.example.paging.pagingwithnetwork.reddit.ui.RedditActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -32,6 +34,7 @@ import kotlin.coroutines.suspendCoroutine
  */
 class MainActivity : AppCompatActivity() {
 
+    @UseExperimental(InternalCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,6 +55,12 @@ class MainActivity : AppCompatActivity() {
         runBlocking(Dispatchers.Main) {
             Log.d("AAAA", "${trivialFun2()} + ${trivialFun()}")
         }
+
+        GlobalScope.launch(Dispatchers.IO) {
+            trivialFun3().collect { i ->
+                Log.d("AAAA", "$i")
+            }
+        }
     }
 
     private fun show(type: RedditPostRepository.Type) {
@@ -66,5 +75,11 @@ class MainActivity : AppCompatActivity() {
     suspend fun trivialFun2(): Int {
         val a = suspendCoroutine<Int> { it.resume(2) }
         return trivialFun() + a
+    }
+
+    fun trivialFun3(): Flow<Int> = flow {
+        for (i in 0..10) {
+            emit(i)
+        }
     }
 }
