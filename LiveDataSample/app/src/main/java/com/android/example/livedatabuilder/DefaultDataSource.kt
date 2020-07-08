@@ -24,6 +24,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 fun sum:Int(){}
+fun sum2:Int(){}
 /**
  * A source of data for [LiveDataViewModel], showcasing different LiveData + coroutines patterns.
  */
